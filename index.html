@@ -1,83 +1,45 @@
 <!doctype html>
-<html ng-app="test4App">
+<html lang="ru">
 <head>
     <title>Test #4</title>
-    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>    
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <script src="dictionary.js"></script>
+    <script src="vue.js"></script>
 </head>
-<body ng-controller="Test4Controller">
-    <table border=1>
-        <thead>
-            <tr>
-                <td>Дата</td>
-                <td>Наименование</td>
-                <td>Тип</td>
-                <td>Место</td>
-                <td>Описание</td>
-                <td>Статус</td>
-                <td>Серия</td>
-                <td>Цена</td>
-                <td>Ссылка</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="event in events">
-                <td>{{ event.date }}</td>
-                <td>{{ event.title }}</td>
-                <td>{{ decodeType(event.type) }}</td>
-                <td>{{ event.place }}</td>
-                <td>{{ event.desc }}</td>
-                <td>{{ decodeState(event.state) }}</td>
-                <td>{{ decodeSeries(event.series) }}</td>
-                <td>{{ event.price }}</td>
-                <td><a href="{{ event.link }}">{{ event.link }}</a></td>
-            </tr>
-        </tbody>
-    </table>
+<body>
+    <div id="app">
+
+        <table border=1>
+            <thead>
+                <tr>
+                    <td>Дата</td>
+                    <td>Наименование</td>
+                    <td>Тип</td>
+                    <td>Место</td>
+                    <td>Описание</td>
+                    <td>Статус</td>
+                    <td>Серия</td>
+                    <td>Цена</td>
+                    <td>Ссылка</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="event in filteredEvents">
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.title }}</td>
+                    <td>{{ translate('type',event.type) }}</td>
+                    <td>{{ event.place }}</td>
+                    <td>{{ event.desc }}</td>
+                    <td>{{ translate('state',event.state) }}</td>
+                    <td>{{ translate('series',event.series) }}</td>
+                    <td>{{ event.price }}</td>
+                    <td>
+                        <a :href="event.link">{{ event.link }}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="index.js"></script>
 </body>
-<script src="angular.min.js"></script>
-<script>
-    angular.module('test4App',[])
-        .controller('Test4Controller', ['$scope', '$http', function PhoneListController($scope, $http) {
-            $scope.decodeType= function(type) {
-                if (type === 'show') return 'Выставки';
-                if (type === 'fest') return 'Фестивали';
-                if (type === 'kids') return 'С детьми';
-                if (type === 'sport') return 'Активный отдых';
-                if (type === 'concert') return 'Музыка';
-                if (type === 'performance') return 'Шоу';
-                if (type === 'fun') return 'Праздники';
-                if (type === 'learn') return 'Образование';
-                if (type === 'kino') return 'Кино';
-                if (type === 'museum') return 'Музеи';
-                if (type === 'park') return 'Парки';
-                if (type === 'walk') return 'Погулять';
-                if (type === 'mustsee') return 'Туризм';
-                if (type === 'theatre') return 'Театры';
-                if (type === 'club') return 'Клубы';
-                if (type === 'more') return 'Прочее';
-                if (type === 'restaurants') return 'Рестораны';
-                return type;
-            }
-            $scope.decodeState= function(state) {
-                if (state === 'want') return 'хочу пойти';
-                if (state === 'notsure') return 'не уверен';
-                if (state === 'notclear') return 'непонятно';
-                if (state === 'skip') return 'не пойду';
-                if (state === 'go') return 'иду';
-                if (state === 'cant') return 'не могу';
-                return state;
-            }
-            $scope.decodeSeries= function(series) {
-                if (series === 'bikemoscow') return 'Вело-Москва';
-                if (series === 'moscowwalk') return 'Московские гуляки';
-                if (series === 'msu') return 'Молодежь МГУ';
-                if (series === 'grandpa') return 'Клуб "Дедушка"';
-                if (series === 'auto') return 'Автоклуб "Авто"';
-                return series;
-            }
-            $http.get('events.json').then(function (response) {
-                $scope.events = response.data;
-            });
-        }]);
-</script>
 </html>

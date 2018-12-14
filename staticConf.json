@@ -1,0 +1,6 @@
+{
+  "Access-Control-Allow-Origin" : "http://localhost:63342",
+  "Access-Control-Allow-Methods" : ["GET", "POST"],
+  "Access-Control-Allow-Headers" : ["Origin","Accept","Content-Type"],
+  "Access-Control-Allow-Credentials" : true
+}
