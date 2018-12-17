@@ -1,0 +1,14 @@
+#menu {
+    display: flex;
+}
+
+#menu .menu_item {
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 15;
+}
+
+#menu .menu_item:hover {
+    background-color: aliceblue;
+}
+

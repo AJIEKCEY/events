@@ -3,12 +3,42 @@
 <head>
     <title>Test #4</title>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <link rel="stylesheet" href="index.css">
     <script src="dictionary.js"></script>
-    <script src="vue.js"></script>
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/vue-select@latest"></script>
 </head>
 <body>
     <div id="app">
-
+        <div id="filterBlock">
+            <!--
+                date - дата от-до,
+                title - по тексту,
+                type - выпадающий список  с множественным выбором (ВСсМН),
+                state - ВСсМН,
+                series - ВСсМН,
+                place - по тексту,
+                desc - по тексту
+             -->
+            <form>
+                Дата
+                <label>с<input v-model.lazy="filters.dateStart" type="date"></label>
+                <label>по<input v-model.lazy="filters.dateEnd" type="date"></label> <br><br>
+                <label>Название<input v-model.lazy="filters.title" type="text"></label> <br><br>
+                Тип
+                <v-select multiple v-model.lazy="filters.type" :options="transformForSelect(dic.type)"></v-select>
+                Статус
+                <v-select multiple v-model.lazy="filters.state" :options="transformForSelect(dic.state)"></v-select>
+                Серия
+                <v-select multiple v-model.lazy="filters.series" :options="transformForSelect(dic.series)"></v-select>
+                <label>Место<input v-model.lazy="filters.place" type="text"></label>
+                <label>Описание<input v-model.lazy="filters.desc" type="text"></label>
+            </form>
+        </div>
+        <div id="menu">
+            <div class="menu_item" v-for="item in years" @click="year = item">{{item}}</div>
+            <div class="menu_item" @click="year = 'now'">События</div>
+        </div>
         <table border=1>
             <thead>
                 <tr>
